@@ -21,6 +21,7 @@ https://www.capital.com.tw  憑證專區
 `pip install haohaninfo`  
 `pip install line-bot-sdk`  
 `git clone https://github.com/x1001000/tnnd.git`  
+`cd tnnd`  
 `git checkout C|Y|T`
 
 ### Settings > Time & Language
