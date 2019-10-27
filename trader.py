@@ -57,7 +57,7 @@ def offset():
     GOC.Delete(broker, order)
     stock = GOC.GetInStock(broker)
     if stock:
-        GOC.Order(broker, prod, od, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
+        GOC.Order(broker, prod, od, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '0')
         sleep(2)
         LINE(str(GOC.GetAccount(broker, 'All')))
         done = True
@@ -93,7 +93,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
                 LINE(info+'上車囉。。。')
                 onboard = True
                 if 8 <= parse(time).hour < 11 and not done:
-                    order = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '1')
+                    order = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '0')
                     sleep(2)
                     LINE(str(GOC.GetAccount(broker, 'All')))
     else:
