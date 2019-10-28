@@ -24,6 +24,6 @@ pip install haohaninfo
 pip install line-bot-sdk
 git clone https://github.com/x1001000/tnnd.git
 cd tnnd
-git checkout C|Y|T  #選策略
-py trader.py TXFK9 TXFL9 1 TX00
+git checkout C|Y|T               # 選一個策略
+py trader.py TXFK9 TXFL9 1 TX00  # 代四個參數
 ```
