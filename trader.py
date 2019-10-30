@@ -51,6 +51,13 @@ def LINE(msg):
     except:
         print('LINE error')
 
+def onset():
+    global onboard, order
+    onboard = True
+    order = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '1')
+    sleep(2)
+    LINE(str(GOC.GetAccount(broker, 'All')))
+
 def offset():
     global onboard, done
     onboard = False
@@ -78,10 +85,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     print(time.split()[-1], *stones, price, sep='\t')
     info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n'
 
-    if not 8 <= parse(time).hour < 11:
-        done = False
-
-    if not onboard:
+    if 8 <= parse(time).hour < 11 and not done and not onboard:
         if stones[1] > 800:
             if (stones[2] > 2000 and stones[3] > 1000 and stones[4] > 50 and stones[5] > 50) or \
                 (stones[2] < -2000 and stones[3] < -1000 and stones[4] < -70 and stones[5] < -70):
@@ -91,12 +95,8 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
                 price_to_win  = price + (12 if do == 'B' else -12)
                 price_to_lose = price + (10 if do == 'S' else -10)
                 LINE(info+'上車囉。。。')
-                onboard = True
-                if 8 <= parse(time).hour < 11 and not done:
-                    order = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '1')
-                    sleep(2)
-                    LINE(str(GOC.GetAccount(broker, 'All')))
-    else:
+                onset()
+    elif onboard:
         if 13 <= parse(time).hour < 14:
             LINE(info+'被老司機趕下車了')
             offset()
@@ -108,3 +108,5 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
             do == 'S' and price >= price_to_lose:
             LINE(info+'下車停損 (╥﹏╥)')
             offset()
+    elif not 8 <= parse(time).hour < 11:
+        done = False
