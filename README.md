@@ -7,7 +7,7 @@
 1. Connect
 
 ### Server Manager > Local Server > IE Enhanced Security Configuration > Off > github.com/x1001000/tnnd
-1. https://www.python.org  3.7.5 Windows x86-64 executable installer
+1. https://www.python.org  3.7.5 Windows x86-64 executable installer ✅PATH
 1. https://git-scm.com
 1. https://visualstudio.microsoft.com  Community 2019 .NET✅ C++✅
 1. https://www.microsoft.com/en-US/download/confirmation.aspx?id=5555
