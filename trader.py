@@ -52,27 +52,27 @@ def LINE(msg):
         print('LINE error')
 
 def onset():
-    global onboard, order
+    global onboard, RODorder
     onboard = True
-    order = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '1')
-    sleep(2)
-    LINE(str(GOC.GetAccount(broker, 'All')))
+    RODorder = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '1')
+    sleep(3)
+    LINE(str(GOC.MatchAccount(broker, RODorder)))
 
 def offset():
     global onboard, done
     onboard = False
-    GOC.Delete(broker, order)
+    GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
-        GOC.Order(broker, prod, od, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
-        sleep(2)
-        LINE(str(GOC.GetAccount(broker, 'All')))
+        IOCorder = GOC.Order(broker, prod, od, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
+        sleep(3)
+        LINE(str(GOC.MatchAccount(broker, IOCorder)))
         done = True
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變/6s', '筆變/6s', '價', sep='\t')
 volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = 0
 onboard = done = False
-order = ''
+
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     time, price, lots, volume1, bought1, sold1 = tick[0], *map(int, tick[2:])
 
