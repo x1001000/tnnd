@@ -56,7 +56,7 @@ def onset():
     onboard = True
     RODorder = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '1')
     sleep(3)
-    LINE(str(GOC.MatchAccount(broker, RODorder)))
+    LINE(str(GOC.GetAccount(broker, RODorder)))
 
 def offset():
     global onboard, done
@@ -66,7 +66,7 @@ def offset():
     if stock:
         IOCorder = GOC.Order(broker, prod, od, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
         sleep(3)
-        LINE(str(GOC.MatchAccount(broker, IOCorder)))
+        LINE(str(GOC.GetAccount(broker, IOCorder)))
         done = True
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變/6s', '筆變/6s', '價', sep='\t')
