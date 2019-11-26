@@ -87,7 +87,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
 
     if 8 <= parse(time).hour < 11 and not done and not onboard:
         if stones[1] > 900:
-            if (stones[2] > 2000 and stones[3] > 1000 and stones[4] > 50 and stones[5] > 50) or \
+            if (stones[2] > 1600 and stones[3] > 850 and stones[4] > 50 and stones[5] > 50) or \
                 (stones[2] < -2000 and stones[3] < -1000 and stones[4] < -70 and stones[5] < -70):
                 do = 'B' if stones[2] > 0 else 'S'
                 od = 'B' if stones[2] < 0 else 'S'
