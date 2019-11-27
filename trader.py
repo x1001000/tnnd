@@ -30,11 +30,17 @@ def match2():
 def commission1():
     global buying1, selling1
     for tick in GOrder.GOQuote().Describe('Simulator', 'commission', prod1):
-        _, buying1, _, selling1 = map(int, tick[2:])
+        try:
+            _, buying1, _, selling1 = map(int, tick[2:])
+        except:
+            continue
 def commission2():
     global buying2, selling2
     for tick in GOrder.GOQuote().Describe('Simulator', 'commission', prod2):
-        _, buying2, _, selling2 = map(int, tick[2:])
+        try:
+            _, buying2, _, selling2 = map(int, tick[2:])
+        except:
+            continue
 Thread(target=match2).start()
 Thread(target=commission1).start()
 Thread(target=commission2).start()
