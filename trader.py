@@ -23,7 +23,10 @@ GOC.AddQuote('Simulator', prod1+','+prod2)
 def match2():
     global volume2, bought2, sold2
     for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod2):
-        volume2, bought2, sold2 = map(int, tick[4:])
+        try:
+            volume2, bought2, sold2 = map(int, tick[4:])
+        except:
+            continue
 def commission1():
     global buying1, selling1
     for tick in GOrder.GOQuote().Describe('Simulator', 'commission', prod1):
@@ -74,7 +77,10 @@ volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = 0
 onboard = done = False
 
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
-    time, price, lots, volume1, bought1, sold1 = tick[0], *map(int, tick[2:])
+    try:
+        time, price, lots, volume1, bought1, sold1 = tick[0], *map(int, tick[2:])
+    except:
+        continue
 
     stones = [  volume1 + volume2, 
         diff(30, seq_volume1, time, volume1), 
