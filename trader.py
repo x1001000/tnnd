@@ -69,14 +69,13 @@ def onset():
 
 def offset():
     global onboard, done
-    onboard = False
+    onboard, done = False, True
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
         IOCorder = GOC.Order(broker, prod, od, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
         sleep(3)
         LINE(str(GOC.GetAccount(broker, IOCorder)))
-        done = True
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變/6s', '筆變/6s', '價', sep='\t')
 volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = 0
