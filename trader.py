@@ -6,7 +6,7 @@ from haohaninfo import GOrder
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
 
-#with open('line.txt') as f:
+user = '團長' #with open('line.txt') as f:
 token = '/v/dB8kM8/1Hk7YzbuSSHD0r/L8xXNCWwzdNN3Dv8t55bMeiZLJrQlc3Wppn/304LHFwxtdYWZVUR04CZ6mZ3OyJC3ISHorY33qgOIirwYkGTiaCdrrRFS6ia38+qY4Y1WZeCg0+6+3M5KScpwQneAdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
@@ -94,7 +94,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         diff(6, seq_b_s, time, buying1 + buying2 - selling1 - selling2), 
         diff(6, seq_B_S, time, sold1 + sold2 - bought1 - bought2)    ]
     print(time.split()[-1], *stones, price, sep='\t')
-    info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n'
+    info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
 
     if 8 <= parse(time).hour < 11 and not done and not onboard:
         if stones[1] > 900:
