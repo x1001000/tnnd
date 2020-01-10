@@ -63,7 +63,7 @@ def LINE(msg):
 def onset():
     global onboard, RODorder
     onboard = True
-    RODorder = GOC.Order(broker, prod, do, str(price_within), qty, 'ROD', 'LMT', '0')
+    RODorder = GOC.Order(broker, prod, on, str(price_within), qty, 'ROD', 'LMT', '0')
     sleep(3)
     LINE(str(GOC.GetAccount(broker, RODorder)))
 
@@ -73,7 +73,7 @@ def offset():
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
-        IOCorder = GOC.Order(broker, prod, od, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '0')
+        IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '0')
         sleep(3)
         LINE(str(GOC.GetAccount(broker, IOCorder)))
 
@@ -100,23 +100,22 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         if stones[1] > 900:
             if (stones[2] > 1600 and stones[3] > 850 and stones[4] > 50 and stones[5] > 50) or \
                 (stones[2] < -2000 and stones[3] < -1000 and stones[4] < -70 and stones[5] < -70):
-                do = 'B' if stones[2] > 0 else 'S'
-                od = 'B' if stones[2] < 0 else 'S'
-                price_within  = price + ( 2 if do == 'B' else  -2)
-                price_to_win  = price + (12 if do == 'B' else -12)
-                price_to_lose = price + (10 if do == 'S' else -10)
+                on, off = ('B', 'S') if stones[2] > 0 else ('S', 'B')
+                price_within  = price + ( 2 if on == 'B' else  -2)
+                price_to_win  = price + (12 if on == 'B' else -12)
+                price_to_lose = price - (10 if on == 'B' else -10)
                 LINE(info+'上車囉。。。')
                 onset()
     elif onboard:
         if 13 <= parse(time).hour < 14:
             LINE(info+'被老司機趕下車了')
             offset()
-        elif do == 'B' and price >= price_to_win or \
-            do == 'S' and price <= price_to_win:
+        elif on == 'B' and price >= price_to_win or \
+            on == 'S' and price <= price_to_win:
             LINE(info+'下車停利 (*´∀`)~♥')
             offset()
-        elif do == 'B' and price <= price_to_lose or \
-            do == 'S' and price >= price_to_lose:
+        elif on == 'B' and price <= price_to_lose or \
+            on == 'S' and price >= price_to_lose:
             LINE(info+'下車停損 (╥﹏╥)')
             offset()
     elif not 8 <= parse(time).hour < 11:
