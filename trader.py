@@ -1,4 +1,4 @@
-import sys
+import os #sys
 from time import sleep
 from threading import Thread
 from dateutil.parser import parse
@@ -11,14 +11,15 @@ token = '/v/dB8kM8/1Hk7YzbuSSHD0r/L8xXNCWwzdNN3Dv8t55bMeiZLJrQlc3Wppn/304LHFwxtd
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
 
+os.system('chcp 950')
 year  = '2020'
-month = input('month[A~L]: ')
+month = input('#1 近月代碼A~L？')
 prod1 = 'TXF' + month + year[-1] #sys.argv[1]
 prod2 = 'TXF' + (chr(ord(month)+1) + year[-1] if month !='L' else 'A' +chr(ord(year[-1])+1)) #sys.argv[2]
-qty = input('order[1~]: ') #sys.argv[3]
-rod = int(input('ROD price within[1~]: '))
-s_p = int(input('stop profit[1~]: '))
-s_l = int(input('stop loss  [1~]: '))
+qty = input('#2 ROD進場幾口？') #sys.argv[3]
+rod = int(input('#3 上車通知點正負幾內上車？'))
+s_p = int(input('#4 上車通知點正負幾時停利？'))
+s_l = int(input('#5 上車通知點正負幾時停損？'))
 prod   = 'TX00' #sys.argv[4]
 broker = 'Capital_Future' #if prod == 'TX00' else 'Simulator'
 GOC = GOrder.GOCommand()
