@@ -103,7 +103,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
 
     if 8 <= parse(time).hour < 12 and not done and not onboard:
-        if stones[1] > 100:
+        if stones[1] > 30:
             if (stones[2] > 160 and stones[3] > 85 and stones[4] > 5 and stones[5] > 5) or \
                 (stones[2] < -200 and stones[3] < -100 and stones[4] < -7 and stones[5] < -7):
                 on, off = ('B', 'S') if stones[2] > 0 else ('S', 'B')
