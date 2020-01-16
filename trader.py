@@ -6,7 +6,7 @@ from haohaninfo import GOrder
 from linebot import LineBotApi
 from linebot.models import TextSendMessage
 
-user = '阿倍' #with open('line.txt') as f:
+user = '千仔' #with open('line.txt') as f:
 token = '/v/dB8kM8/1Hk7YzbuSSHD0r/L8xXNCWwzdNN3Dv8t55bMeiZLJrQlc3Wppn/304LHFwxtdYWZVUR04CZ6mZ3OyJC3ISHorY33qgOIirwYkGTiaCdrrRFS6ia38+qY4Y1WZeCg0+6+3M5KScpwQneAdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
@@ -20,8 +20,8 @@ qty = input('#2 ROD進場幾口？') #sys.argv[3]
 rod = int(input('#3 上車通知點正負幾內上車？'))
 s_p = int(input('#4 上車通知點正負幾時停利？'))
 s_l = int(input('#5 上車通知點正負幾時停損？'))
-prod   = 'TX00' #sys.argv[4]
-broker = 'Capital_Future' #if prod == 'TX00' else 'Simulator'
+prod   = prod1 #'TX00' #sys.argv[4]
+broker = 'Capital_Future' if prod == 'TX00' else 'Simulator'
 GOC = GOrder.GOCommand()
 GOC.AddQuote(broker, prod)
 GOC.AddQuote('Simulator', prod1+','+prod2)
@@ -75,7 +75,7 @@ def onset():
 
 def offset():
     global onboard, done
-    onboard, done = False, True
+    onboard, done = False, False#True
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
@@ -102,15 +102,15 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     print(time.split()[-1], *stones, price, sep='\t')
     info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
 
-    if 8 <= parse(time).hour < 11 and not done and not onboard:
-        if stones[1] > 900:
-            if (stones[2] > 1600 and stones[3] > 850 and stones[4] > 50 and stones[5] > 50) or \
-                (stones[2] < -2000 and stones[3] < -1000 and stones[4] < -70 and stones[5] < -70):
+    if 8 <= parse(time).hour < 12 and not done and not onboard:
+        if stones[1] > 100:
+            if (stones[2] > 160 and stones[3] > 85 and stones[4] > 5 and stones[5] > 5) or \
+                (stones[2] < -200 and stones[3] < -100 and stones[4] < -7 and stones[5] < -7):
                 on, off = ('B', 'S') if stones[2] > 0 else ('S', 'B')
                 price_within  = price + (rod if on == 'B' else -rod)
                 price_to_win  = price + (s_p if on == 'B' else -s_p)
                 price_to_lose = price - (s_l if on == 'B' else -s_l)
-                LINE(info+'上車囉。。。')
+                LINE(info+'上車測試囉。。。')
                 onset()
     elif onboard:
         if 13 <= parse(time).hour < 14:
@@ -124,5 +124,5 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
             on == 'S' and price >= price_to_lose:
             LINE(info+'下車停損 (╥﹏╥)')
             offset()
-    elif not 8 <= parse(time).hour < 11:
+    elif not 8 <= parse(time).hour < 12:
         done = False
