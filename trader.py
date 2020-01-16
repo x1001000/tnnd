@@ -13,13 +13,13 @@ line_bot_api = LineBotApi(token)
 
 os.system('chcp 950')
 year  = '2020'
-month = input('#1 近月代碼A~L？')
+month = input('近月代碼A~L？\t\t')
 prod1 = 'TXF' + month + year[-1] #sys.argv[1]
 prod2 = 'TXF' + (chr(ord(month)+1) + year[-1] if month !='L' else 'A' +chr(ord(year[-1])+1)) #sys.argv[2]
-qty = input('#2 ROD進場幾口？') #sys.argv[3]
-rod = int(input('#3 上車通知點正負幾內上車？'))
-s_p = int(input('#4 上車通知點正負幾時停利？'))
-s_l = int(input('#5 上車通知點正負幾時停損？'))
+qty = input('ROD進場幾口？\t\t') #sys.argv[3]
+rod = int(input('上車通知點正負幾內上車？'))
+s_p = int(input('上車通知點正負幾時停利？'))
+s_l = int(input('上車通知點正負幾時停損？'))
 prod   = prod1 #'TX00' #sys.argv[4]
 broker = 'Capital_Future' if prod == 'TX00' else 'Simulator'
 GOC = GOrder.GOCommand()
