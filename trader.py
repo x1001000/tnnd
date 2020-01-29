@@ -7,7 +7,7 @@ from linebot import LineBotApi
 from linebot.models import TextSendMessage
 
 user = '團長' #with open('line.txt') as f:
-token = '/v/dB8kM8/1Hk7YzbuSSHD0r/L8xXNCWwzdNN3Dv8t55bMeiZLJrQlc3Wppn/304LHFwxtdYWZVUR04CZ6mZ3OyJC3ISHorY33qgOIirwYkGTiaCdrrRFS6ia38+qY4Y1WZeCg0+6+3M5KScpwQneAdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
+token = '1efrfG/5kHZatudAt23L6zarS7bTfsJYcUmV2kmg5DvF2ArPX87bIxx2x1hXMT9E8Y+YAAZQ0pIJ9sltiGgt4zNSKwRiON11+7LTnBWw7im5+qVyrboj0paDuTvZBCFzHgN2JzMEQEjkZVvgfNaEPQdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
 
