@@ -75,7 +75,7 @@ def onset():
 
 def offset():
     global onboard, done
-    onboard, done = False, False#True
+    onboard, done = False, True
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
@@ -86,6 +86,7 @@ def offset():
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變/6s', '筆變/6s', '價', sep='\t')
 volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = 0
 onboard = done = False
+first = True
 
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     try:
@@ -103,15 +104,18 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
 
     if 8 <= parse(time).hour < 12 and not done and not onboard:
-        if stones[1] > 30:
-            if (stones[2] > 160 and stones[3] > 85 and stones[4] > 5 and stones[5] > 5) or \
+        if stones[1] > 900:
+            if first:
+                first = False
+                LINE(info+'今日首班車來囉！')
+            '''if (stones[2] > 160 and stones[3] > 85 and stones[4] > 5 and stones[5] > 5) or \
                 (stones[2] < -200 and stones[3] < -100 and stones[4] < -7 and stones[5] < -7):
                 on, off = ('B', 'S') if stones[2] > 0 else ('S', 'B')
                 price_within  = price + (rod if on == 'B' else -rod)
                 price_to_win  = price + (s_p if on == 'B' else -s_p)
                 price_to_lose = price - (s_l if on == 'B' else -s_l)
                 LINE(info+'上車測試囉。。。')
-                onset()
+                onset()'''
     elif onboard:
         if 13 <= parse(time).hour < 14:
             LINE(info+'被老司機趕下車了')
@@ -125,4 +129,4 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
             LINE(info+'下車停損 (╥﹏╥)')
             offset()
     elif not 8 <= parse(time).hour < 12:
-        done = False
+        done, first = False, True
