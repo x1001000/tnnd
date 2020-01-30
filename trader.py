@@ -69,7 +69,7 @@ def LINE(msg):
 def onset():
     global onboard, RODorder
     onboard = True
-    RODorder = GOC.Order(broker, prod, on, str(price_within), qty, 'ROD', 'LMT', '0')
+    RODorder = GOC.Order(broker, prod, on, str(price_within), qty, 'ROD', 'LMT', '1')
     sleep(3)
     LINE(str(GOC.GetAccount(broker, RODorder)))
 
@@ -79,7 +79,7 @@ def offset():
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
-        IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '0')
+        IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
         sleep(3)
         LINE(str(GOC.GetAccount(broker, IOCorder)))
 
