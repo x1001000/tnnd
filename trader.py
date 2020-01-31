@@ -107,7 +107,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         if stones[1] > 900:
             if first:
                 first = False
-                LINE(info+'今日首班車來囉！')
+                LINE(info[:-2]+'今日首班車來囉！')
             '''if (stones[2] > 160 and stones[3] > 85 and stones[4] > 5 and stones[5] > 5) or \
                 (stones[2] < -200 and stones[3] < -100 and stones[4] < -7 and stones[5] < -7):
                 on, off = ('B', 'S') if stones[2] > 0 else ('S', 'B')
