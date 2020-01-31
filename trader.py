@@ -1,6 +1,7 @@
 import os #sys
 from time import sleep
 from threading import Thread
+from datetime import timedelta
 from dateutil.parser import parse
 from haohaninfo import GOrder
 from linebot import LineBotApi
@@ -52,10 +53,10 @@ Thread(target=commission1).start()
 Thread(target=commission2).start()
 
 seq_volume1, seq_b_s, seq_B_S = [], [], []
-def diff(interval, sequence, time, value):
+def diff(sequence, time, value, seconds=6):
     sequence.append((time, value))
     for t, v in sequence[:]:
-        if (parse(time) - parse(t)).seconds > interval:
+        if parse(time) - parse(t) > timedelta(seconds=seconds):
             sequence.pop(0)
         else:
             return  value - v
@@ -94,11 +95,11 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         continue
 
     stones = [  volume1 + volume2, 
-        diff(30, seq_volume1, time, volume1), 
+        diff(seq_volume1, time, volume1, 30), 
         buying1 + buying2 - selling1 - selling2, 
         sold1 + sold2 - bought1 - bought2, 
-        diff(6, seq_b_s, time, buying1 + buying2 - selling1 - selling2), 
-        diff(6, seq_B_S, time, sold1 + sold2 - bought1 - bought2)    ]
+        diff(seq_b_s, time, buying1 + buying2 - selling1 - selling2), 
+        diff(seq_B_S, time, sold1 + sold2 - bought1 - bought2)    ]
     print(time.split()[-1], *stones, price, sep='\t')
     info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
 
