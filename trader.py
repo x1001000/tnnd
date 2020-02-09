@@ -12,10 +12,16 @@ token = '1efrfG/5kHZatudAt23L6zarS7bTfsJYcUmV2kmg5DvF2ArPX87bIxx2x1hXMT9E8Y+YAAZ
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
 
-os.system('cls')
 os.system('chcp 950')
-user = ['千仔', '陳董', '阿倍', '團長'][int(input('請輸入特務編號: '))]
-print(f'{user}您好，我是爽爽弟！')
+os.system('cls')
+try:
+    user = input('TNND幹員編號(001=陳董 002=阿倍 003=團長): ')
+    user = ['千仔', '陳董', '阿倍', '團長'][int(user)]
+except:
+    print(f'TNND {user}不存在！')
+    exit()
+os.system('cls')
+print(f'{user}您好，我是爽爽弟！\n')
 month =   input('請輸入近月代碼: ')
 qty =     input('請輸入進場口數: ') #sys.argv[3]
 job = int(input('請輸入次數限制: '))
