@@ -28,8 +28,10 @@ job = int(input('請問進場幾趟: '))
 print()
 gold = [1001000]*10          #1001000.io
 gold[1]   = int(input('請問觸發通知上車的近30秒成交量大於: '))
-gold[2:6] = list(map(int, input('且做多的口差筆差口差變動筆差變動大於: ').split()))
-gold[6: ] = list(map(int, input('或做空的口差筆差口差變動筆差變動小於: ').split()))
+g,o,l,d   = map(int, input('且做多的口差筆差口差變動筆差變動大於: ').split())
+gold[2:6] = g,o,l,d
+g,o,l,d   = map(int, input('或做空的口差筆差口差變動筆差變動小於: ').split())
+gold[6: ] = g,o,l,d
 print()
 rod = int(input('請問通知點正負幾內上車: '))
 s_p = int(input('請問通知點正負幾停利點: '))
