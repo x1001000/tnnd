@@ -27,7 +27,7 @@ gold = map(int, input('上車通知觸發條件: ').split())
 year = str(datetime.now().year)[-1]
 prod1 = 'TXF' + month + year #sys.argv[1]
 prod2 = 'TXF' + (chr(ord(month)+1) + year if month !='L' else 'A' +chr(ord(year)+1)) #sys.argv[2]
-prod  = 'TX00' #sys.argv[4]
+prod  = 'TX00' if user != '千仔' else prod1 #sys.argv[4]
 broker = 'Capital_Future' if prod == 'TX00' else 'Simulator'
 GOC = GOrder.GOCommand()
 GOC.AddQuote(broker, prod)
