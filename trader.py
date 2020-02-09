@@ -20,15 +20,21 @@ try:
 except:
     print(f'TNND幹員{user}不存在！')
     exit()
+os.system('cls')
 print(f'{user}您好，我是爽爽弟！\n')
-month =   input('請輸入近月代碼: ')
-qty =     input('請輸入進場口數: ') #sys.argv[3]
-job = int(input('請輸入次數限制: '))
-rod = int(input('上車通知點正負幾內上車: '))
-s_p = int(input('上車通知點正負幾時停利: '))
-s_l = int(input('上車通知點正負幾時停損: '))
-gold = map(int, input('上車通知觸發條件: ').split())
-
+month =   input('請問近月代碼: ')
+qty =     input('請問進場幾口: ') #sys.argv[3]
+job = int(input('請問進場幾趟: '))
+print()
+gold = [1001000]*10          #1001000.io
+gold[1]   = int(input('請問觸發通知上車的近30秒成交量大於: '))
+gold[2:6] = list(map(int, input('且做多的口差筆差口差變動筆差變動大於: ').split()))
+gold[6: ] = list(map(int, input('或做空的口差筆差口差變動筆差變動小於: ').split()))
+print()
+rod = int(input('請問通知點正負幾內上車: '))
+s_p = int(input('請問通知點正負幾停利點: '))
+s_l = int(input('請問通知點正負幾停損點: '))
+print()
 year = str(datetime.now().year)[-1]
 prod1 = 'TXF' + month + year #sys.argv[1]
 prod2 = 'TXF' + (chr(ord(month)+1) + year if month !='L' else 'A' +chr(ord(year)+1)) #sys.argv[2]
@@ -129,9 +135,9 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         LINE(info[:-2]+'今日首班車來囉！')
     
     if 8 <= parse(time).hour < 13 and not onboard and todo:
-        if stones[1] > gold[0]:
-            if  (stones[2] > gold[1] and stones[3] > gold[2] and stones[4] > gold[3] and stones[5] > gold[4]) or \
-                (stones[2] < gold[5] and stones[3] < gold[6] and stones[4] < gold[7] and stones[5] < gold[8]):
+        if stones[1] > gold[1]:
+            if  (stones[2] > gold[2] and stones[3] > gold[3] and stones[4] > gold[4] and stones[5] > gold[5]) or \
+                (stones[2] < gold[6] and stones[3] < gold[7] and stones[4] < gold[8] and stones[5] < gold[9]):
                 on, off = ('B', 'S') if stones[2] > 0 else ('S', 'B')
                 price_within  = price + (rod if on == 'B' else -rod)
                 price_to_win  = price + (s_p if on == 'B' else -s_p)
