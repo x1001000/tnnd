@@ -18,9 +18,8 @@ try:
     user = input('TNND幹員編號(001=陳董 002=阿倍 003=團長): ')
     user = ['千仔', '陳董', '阿倍', '團長'][int(user)]
 except:
-    print(f'TNND {user}不存在！')
+    print(f'TNND幹員{user}不存在！')
     exit()
-os.system('cls')
 print(f'{user}您好，我是爽爽弟！\n')
 month =   input('請輸入近月代碼: ')
 qty =     input('請輸入進場口數: ') #sys.argv[3]
