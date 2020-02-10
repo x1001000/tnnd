@@ -71,7 +71,7 @@ Thread(target=commission1).start()
 Thread(target=commission2).start()
 
 seq_volume1, seq_b_s, seq_B_S = [], [], []
-def diff(sequence, time, value, seconds=30):
+def diff(sequence, value, seconds=30):
     sequence.append((time, value))
     for t, v in sequence[:]:
         if parse(time) - parse(t) > timedelta(seconds=seconds):
@@ -123,7 +123,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
 
     stones = [
         volume1 + volume2,
-        diff(seq_volume1, time, volume1),
+        diff(seq_volume1, volume1),
         buying1 - selling1 + buying2 - selling2,
         sold1 - bought1 + sold2 - bought2,
         buying1 - selling1 + buying2 - selling2 - stones2,
