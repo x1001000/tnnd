@@ -81,12 +81,13 @@ def diff(sequence, value, seconds=30):
 
 def zeroing():
     global clock
-    if parse(time).time() >= clock:
+    result = False
+    while parse(time).time() >= clock:
         minute = clock.minute + 5
         hour   = clock.hour + minute//60
         clock  = dtime(hour%24, minute%60)
-        return True
-    return False
+        result =  True
+    return result
 
 def LINE(msg):
     try:
