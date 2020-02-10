@@ -139,7 +139,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         if stones[1] > gold[1]:
             if  (stones[2] > gold[2] and stones[3] > gold[3] and stones[4] > gold[4] and stones[5] > gold[5]) or \
                 (stones[2] < gold[6] and stones[3] < gold[7] and stones[4] < gold[8] and stones[5] < gold[9]):
-                on, off = ('B', 'S') if stones[2] > 0 else ('S', 'B')
+                on, off = ('B', 'S') if stones[5] > 0 else ('S', 'B')
                 price_within  = price + (rod if on == 'B' else -rod)
                 price_to_win  = price + (s_p if on == 'B' else -s_p)
                 price_to_lose = price - (s_l if on == 'B' else -s_l)
