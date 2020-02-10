@@ -114,7 +114,7 @@ def offset():
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變', '筆變', '價', sep='\t')
 volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = stones2 = stones3 = 0
-onboard, todo, first, clock = False, job, True if user == '千仔' else False, dtime(8, 45)
+onboard, todo, first, clock = False, job, True if user == '千仔' else False, dtime(0,0)
 
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     try:
