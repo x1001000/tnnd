@@ -13,7 +13,6 @@ id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
 
 os.system('chcp 950')
-os.system('cls')
 try:
     user = input('TNND幹員編號(001=陳董 002=阿倍 003=團長): ')
     user = ['千仔', '陳董', '阿倍', '團長'][int(user)]
