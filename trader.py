@@ -26,10 +26,10 @@ qty =     input('請問進場幾口: ') #sys.argv[3]
 job = int(input('請問進場幾趟: '))
 print()
 gold = [1001000]*10          #1001000.io
-gold[1]   = int(input('請問觸發通知上車的近30秒成交量大於: '))
-g,o,l,d   = map(int, input('且做多的口差筆差口差變動筆差變動大於: ').split())
+gold[1]   = int(input('請問觸發通知上車的 近30秒成交量 大於: '))
+g,o,l,d   = map(int, input('且做多的 口差 筆差 口差變動 筆差變動 大於: ').split())
 gold[2:6] = g,o,l,d
-g,o,l,d   = map(int, input('或做空的口差筆差口差變動筆差變動小於: ').split())
+g,o,l,d   = map(int, input('或做空的 口差 筆差 口差變動 筆差變動 小於: ').split())
 gold[6: ] = g,o,l,d
 print()
 rod = int(input('請問通知點正負幾內上車: '))
@@ -138,7 +138,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         first = False
         LINE(info[:-2]+'今日首班車來囉！')
     
-    if 8 <= parse(time).hour < 13 and not onboard and todo:
+    if 9 <= parse(time).hour < 12 and not onboard and todo:
         if stones[1] > gold[1]:
             if  (stones[2] > gold[2] and stones[3] > gold[3] and stones[4] > gold[4] and stones[5] > gold[5]) or \
                 (stones[2] < gold[6] and stones[3] < gold[7] and stones[4] < gold[8] and stones[5] < gold[9]):
