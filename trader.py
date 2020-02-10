@@ -128,6 +128,8 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         sold1 - bought1 + sold2 - bought2,
         buying1 - selling1 + buying2 - selling2 - stones2,
         sold1 - bought1 + sold2 - bought2       - stones3]
+    if zeroing():
+        stones2, stones3, stones[4], stones[5] = stones[2], stones[3], 0, 0
     print(time.split()[-1], *stones, price, sep='\t')
     info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
 
@@ -159,6 +161,3 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
             offset()
     elif not 8 <= parse(time).hour < 13:
         todo, first = job, True if user == '千仔' else False
-    
-    if zeroing():
-        stones2, stones3 = stones[2], stones[3]
