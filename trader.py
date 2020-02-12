@@ -145,7 +145,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     if zeroing(clk5, 5):
         stones2, stones3, stones[4], stones[5] = stones[2], stones[3], 0, 0
     print(time.split()[-1], *stones, price, sep='\t')
-    info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
+    info = time + '\n' + str(stones[1:]) + '\n' + str(K[:-1]) + '\n' + str(price) + '\n' + user
 
     if 8 <= parse(time).hour < 13 and first and stones[1] > 900:
         first = False
