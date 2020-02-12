@@ -35,7 +35,7 @@ gold[2:6] = g,o,l,d
 g,o,l,d   = map(int, input('或做空的 口差 筆差 口差變動 筆差變動 小於: ').split())
 gold[6: ] = g,o,l,d
 print()
-rod = int(input('請問觸發通知上車的幾點內才上車: '))
+rod = int(input('請問觸發通知點的 幾點內 才上車: '))
 P,L = map(int, input('請問大範圍的下車 停利點 停損點: ').split())
 p,l = map(int, input('請問小範圍的下車 停利點 停損點: ').split())
 print()
