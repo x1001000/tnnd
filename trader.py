@@ -35,9 +35,9 @@ gold[2:6] = g,o,l,d
 g,o,l,d   = map(int, input('或做空的 口差 筆差 口差變動 筆差變動 小於: ').split())
 gold[6: ] = g,o,l,d
 print()
-rod = int(input('請問通知點正負幾內上車: '))
-s_p = int(input('請問通知點正負幾停利點: '))
-s_l = int(input('請問通知點正負幾停損點: '))
+rod = int(input('請問觸發通知上車的幾點內才上車: '))
+P,L = map(int, input('請問大範圍的下車 停利點 停損點: ').split())
+p,l = map(int, input('請問小範圍的下車 停利點 停損點: ').split())
 print()
 year = str(datetime.now().year)[-1]
 prod1 = 'TXF' + month + year #sys.argv[1]
@@ -82,14 +82,18 @@ def diff(sequence, value, seconds=30):
         else:
             return  value - v
 
-def zeroing():
-    global clock
+def zeroing(clock, minutes):
+    global clk1, clk5
     result = False
     while parse(time).time() >= clock:
-        minute = clock.minute + 5
+        minute = clock.minute + minutes
         hour   = clock.hour + minute//60
         clock  = dtime(hour%24, minute%60)
         result =  True
+    if minutes == 1:
+        clk1 = clock
+    else:
+        clk5 = clock
     return result
 
 def LINE(msg):
@@ -116,8 +120,8 @@ def offset():
         LINE(str(GOC.GetAccount(broker, IOCorder)))
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變', '筆變', '價', sep='\t')
-volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = stones2 = stones3 = 0
-onboard, todo, first, clock = False, job, True if user == '千仔' else False, dtime(0,0)
+volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = stones2 = stones3 = close = 0
+onboard, todo, first, clk1, clk5, K = False, job, True if user == '千仔' else False, dtime(0,0), dtime(0,0), [0,0,0,0,0]
 
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     try:
@@ -132,7 +136,13 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         sold1 - bought1 + sold2 - bought2,
         buying1 - selling1 + buying2 - selling2 - stones2,
         sold1 - bought1 + sold2 - bought2       - stones3]
-    if zeroing():
+    if zeroing(clk1, 1):
+        K.pop(0)
+        K.pop(0)
+        K.append(close)
+        K.append(price)
+    close = price
+    if zeroing(clk5, 5):
         stones2, stones3, stones[4], stones[5] = stones[2], stones[3], 0, 0
     print(time.split()[-1], *stones, price, sep='\t')
     info = time + '\n' + str(stones[1:]) + '\n' + str(price) + '\n' + user
@@ -143,8 +153,9 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     
     if 9 <= parse(time).hour < 12 and not onboard and todo:
         if stones[1] > gold[1]:
-            if  stones[2] > gold[2] and stones[3] > gold[3] and stones[4] > gold[4] and stones[5] > gold[5] or \
-                stones[2] < gold[6] and stones[3] < gold[7] and stones[4] < gold[8] and stones[5] < gold[9]:
+            if  stones[2] > gold[2] and stones[3] > gold[3] and stones[4] > gold[4] and stones[5] > gold[5] and K[3] > K[2] and K[1] >= K[0] or \
+                stones[2] < gold[6] and stones[3] < gold[7] and stones[4] < gold[8] and stones[5] < gold[9] and K[3] < K[2] and K[1] <= K[0]:
+                s_p, s_l = (p, l) if abs(K[3] - K[2]) < abs(K[1] - K[0]) else (P, L)
                 on, off = ('B', 'S') if stones[5] > 0 else ('S', 'B')
                 price_within  = price + (rod if on == 'B' else -rod)
                 price_to_win  = price + (s_p if on == 'B' else -s_p)
