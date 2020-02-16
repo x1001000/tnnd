@@ -1,4 +1,5 @@
-import os #sys
+import os
+os.system('chcp 950')
 from time import sleep
 from threading import Thread
 from datetime import datetime, timedelta, time as dtime
@@ -12,7 +13,6 @@ token = '1efrfG/5kHZatudAt23L6zarS7bTfsJYcUmV2kmg5DvF2ArPX87bIxx2x1hXMT9E8Y+YAAZ
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
 
-os.system('chcp 950')
 try:
     user = input('TNND幹員編號(001=陳董 002=阿倍 003=團長): ')
     user = ['千仔', '陳董', '阿倍', '團長'][int(user)]
