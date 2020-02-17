@@ -111,9 +111,9 @@ def onset():
         int(RODorder)
     except:
         RODorder = GOC.GetAccount(broker, 'All')[-1].split(',')[0]
-    LINE('GetAccount函數回傳：\n' + str(GOC.GetAccount(broker, RODorder)) + 
-    '\n\nMatchAccount函數回傳：\n' + str(GOC.MatchAccount(broker, RODorder)) + 
-    '\n\n' + user + '確認一下喔！')
+    LINE('委託紀錄：\n' + str(GOC.GetAccount(broker, RODorder)) + 
+        '\n成交紀錄：\n' + str(GOC.MatchAccount(broker, RODorder)) + 
+        '\n' + user + '確認一下喔！')
 
 def offset():
     global onboard, todo
@@ -127,9 +127,9 @@ def offset():
             int(IOCorder)
         except:
             IOCorder = GOC.GetAccount(broker, 'All')[-1].split(',')[0]
-        LINE('GetAccount函數回傳：\n' + str(GOC.GetAccount(broker, IOCorder)) + 
-        '\n\nMatchAccount函數回傳：\n' + str(GOC.MatchAccount(broker, IOCorder)) + 
-        '\n\n' + user + '確認一下喔！')
+        LINE('委託紀錄：\n' + str(GOC.GetAccount(broker, IOCorder)) + 
+            '\n成交紀錄：\n' + str(GOC.MatchAccount(broker, IOCorder)) + 
+            '\n' + user + '確認一下喔！')
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變', '筆變', '價', sep='\t')
 volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = stones2 = stones3 = close = 0
