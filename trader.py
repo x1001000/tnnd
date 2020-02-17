@@ -105,9 +105,15 @@ def LINE(msg):
 def onset():
     global onboard, RODorder
     onboard = True
-    RODorder = GOC.Order(broker, prod, on, str(price_within), qty, 'ROD', 'LMT', daytrading)
-    sleep(3)
-    LINE(str(GOC.GetAccount(broker, RODorder)))
+    RODorder = GOC.Order(broker, prod, on, str(price_within), qty, 'ROD', 'LMT', '0')
+    sleep(2)
+    try:
+        int(RODorder)
+    except:
+        RODorder = GOC.GetAccount(broker, 'All')[-1].split(',')[0]
+    LINE('GetAccount函數回傳：\n' + str(GOC.GetAccount(broker, RODorder)) + 
+    '\n\nMatchAccount函數回傳：\n' + str(GOC.MatchAccount(broker, RODorder)) + 
+    '\n\n' + user + '確認一下喔！')
 
 def offset():
     global onboard, todo
@@ -115,13 +121,19 @@ def offset():
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
-        IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', daytrading)
-        sleep(3)
-        LINE(str(GOC.GetAccount(broker, IOCorder)))
+        IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '0')
+        sleep(2)
+        try:
+            int(IOCorder)
+        except:
+            IOCorder = GOC.GetAccount(broker, 'All')[-1].split(',')[0]
+        LINE('GetAccount函數回傳：\n' + str(GOC.GetAccount(broker, IOCorder)) + 
+        '\n\nMatchAccount函數回傳：\n' + str(GOC.MatchAccount(broker, IOCorder)) + 
+        '\n\n' + user + '確認一下喔！')
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變', '筆變', '價', sep='\t')
 volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = stones2 = stones3 = close = 0
-onboard, todo, first, clk1, clk5, K = False, job, True if user == '千仔' else False, dtime(0,0), dtime(0,0), [0,0,0,0,0]
+onboard, todo, first, clk1, clk5, K = False, job, True if user == '陳董' else False, dtime(0,0), dtime(0,0), [0,0,0,0,0]
 
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     try:
@@ -175,4 +187,4 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
             LINE(info+'下車停損 (╥﹏╥)')
             offset()
     elif not 8 <= parse(time).hour < 13:
-        todo, first = job, True if user == '千仔' else False
+        todo, first = job, True if user == '陳董' else False
