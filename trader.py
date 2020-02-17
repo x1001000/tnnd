@@ -172,7 +172,7 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
                 price_within  = price + (rod if on == 'B' else -rod)
                 price_to_win  = price + (s_p if on == 'B' else -s_p)
                 price_to_lose = price - (s_l if on == 'B' else -s_l)
-                LINE(info+'上車做'+('多' if on == 'B' else '空')+'•••')
+                LINE(info+'上車做'+('多' if on == 'B' else '空')+'。。。')
                 onset()
     elif onboard:
         if 13 <= parse(time).hour < 14:
