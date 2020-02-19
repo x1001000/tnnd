@@ -128,12 +128,24 @@ def offset():
         LINE('成交回報\n' + str(GOC.GetAccount(broker, IOCorder))[2:-2])
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變', '筆變', '價', sep='\t')
-volume2 = bought2 = sold2 = buying1 = selling1 = buying2 = selling2 = stones2 = stones3 = close = 0
+stones2 = stones3 = close = 0
 onboard, todo, first, clk1, clk5, K = False, job, True if user == '陳董' else False, dtime(0,0), dtime(0,0), [0,0,0,0,0]
 
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     try:
         time, price, lots, volume1, bought1, sold1 = tick[0], *map(int, tick[2:])
+    except:
+        continue
+    try:
+        bought2
+    except:
+        continue
+    try:
+        buying1
+    except:
+        continue
+    try:
+        buying2
     except:
         continue
 
