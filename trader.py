@@ -129,7 +129,7 @@ def offset():
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變', '筆變', '價', sep='\t')
 stones2 = stones3 = close = 0
-onboard, todo, first, clk1, clk5, K = False, job, True if user == '陳董' else False, dtime(0,0), dtime(0,0), [0,0,0,0,0]
+onboard, todo, first, clk1, clk5, K = False, job, True if user == '阿倍' else False, dtime(0,0), dtime(0,0), [0,0,0,0,0]
 
 for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     try:
@@ -195,4 +195,4 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
             LINE(info+'下車停損 (╥﹏╥)')
             offset()
     elif not 8 <= parse(time).hour < 13:
-        todo, first = job, True if user == '陳董' else False
+        todo, first = job, True if user == '阿倍' else False
