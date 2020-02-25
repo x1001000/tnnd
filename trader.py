@@ -1,6 +1,5 @@
 import os
 os.system('chcp 950')
-from time import sleep
 from threading import Thread
 from datetime import datetime, timedelta, time as dtime
 from dateutil.parser import parse
@@ -106,13 +105,13 @@ def onset():
     global onboard, RODorder
     onboard = True
     RODorder = GOC.Order(broker, prod, on, str(price_within), qty, 'ROD', 'LMT', daytrading)
-    sleep(2)
     try:
         int(RODorder)
+        GA = GOC.GetAccount(broker, RODorder)
+        MA = GOC.MatchAccount(broker, RODorder)
+        LINE(f'委託序號\n{GA[0][:-2]}')
     except:
-        LINE('交易失敗錯誤訊息：' + RODorder)
-    LINE('成交回報\n' + str(GOC.GetAccount(broker, RODorder))[2:-2])
-
+        LINE(f'錯誤訊息：{RODorder}')
 def offset():
     global onboard, todo
     onboard, todo = False, todo-1
@@ -120,12 +119,13 @@ def offset():
     stock = GOC.GetInStock(broker)
     if stock:
         IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', daytrading)
-        sleep(2)
         try:
             int(IOCorder)
+            GA = GOC.GetAccount(broker, IOCorder)
+            MA = GOC.MatchAccount(broker, IOCorder)
+            LINE(f'委託序號\n{GA[0][:-2]}')
         except:
-            LINE('交易失敗錯誤訊息：' + IOCorder)
-        LINE('成交回報\n' + str(GOC.GetAccount(broker, IOCorder))[2:-2])
+            LINE(f'錯誤訊息：{IOCorder}')
 
 print('時間\t', '總量', '量/30s', '口差', '筆差', '口變', '筆變', '價', sep='\t')
 stones2 = stones3 = close = 0
