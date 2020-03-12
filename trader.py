@@ -102,9 +102,8 @@ def LINE(msg):
         print('LINE error')
 
 def onset():
-    global onboard, RODorder
-    onboard = True
-    RODorder = GOC.Order(broker, prod, on, str(price_within), qty, 'ROD', 'LMT', daytrading)
+    global RODorder
+    RODorder = GOC.Order(broker, prod, on, str(price_within), str(qty), 'ROD', 'LMT', daytrading)
     try:
         int(RODorder)
         GA = GOC.GetAccount(broker, RODorder)
@@ -113,8 +112,6 @@ def onset():
     except:
         LINE(info + f'錯誤訊息：{RODorder}')
 def offset():
-    global onboard, todo
-    onboard, todo = False, todo-1
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
