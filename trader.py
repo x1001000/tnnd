@@ -18,8 +18,6 @@ try:
 except:
     print(f'TNND幹員{user}不存在！')
     exit()
-daytraders = ['陳董', '阿倍']
-daytrading = '1' if user in daytraders else '0'
 
 os.system('cls')
 print(f'{user}您好，我是爽爽！\n')
@@ -103,7 +101,7 @@ def LINE(msg):
 
 def onset():
     global RODorder
-    RODorder = GOC.Order(broker, prod, on, str(price_within), str(qty), 'ROD', 'LMT', daytrading)
+    RODorder = GOC.Order(broker, prod, on, str(price_within), str(qty), 'ROD', 'LMT', '1')
     try:
         int(RODorder)
         GA = GOC.GetAccount(broker, RODorder)
@@ -115,7 +113,7 @@ def offset():
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
-        IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', daytrading)
+        IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
         try:
             int(IOCorder)
             GA = GOC.GetAccount(broker, IOCorder)
