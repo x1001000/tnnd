@@ -8,7 +8,8 @@ from linebot import LineBotApi
 from linebot.models import TextSendMessage
 
 #with open('line.txt') as f:
-token = 'a1jS7SiQ1UKS86CAn+mBVbuWhblGCBy06qM8++yF6x17TjVEvR/jWQrp14qGFwk3LHFwxtdYWZVUR04CZ6mZ3OyJC3ISHorY33qgOIirwYkAwUh9KW4pLjUFJG+FCh0InF2dBUo4ses5oKpUb0ABWQdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
+#token = 'a1jS7SiQ1UKS86CAn+mBVbuWhblGCBy06qM8++yF6x17TjVEvR/jWQrp14qGFwk3LHFwxtdYWZVUR04CZ6mZ3OyJC3ISHorY33qgOIirwYkAwUh9KW4pLjUFJG+FCh0InF2dBUo4ses5oKpUb0ABWQdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
+token = '1efrfG/5kHZatudAt23L6zarS7bTfsJYcUmV2kmg5DvF2ArPX87bIxx2x1hXMT9E8Y+YAAZQ0pIJ9sltiGgt4zNSKwRiON11+7LTnBWw7im5+qVyrboj0paDuTvZBCFzHgN2JzMEQEjkZVvgfNaEPQdB04t89/1O/w1cDnyilFU=' # 爽爽弟
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
 
