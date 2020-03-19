@@ -94,9 +94,9 @@ def zeroing(clock, minutes):
         clk5 = clock
     return result
 
-def LINE(msg):
+def LINE(text, id=id):
     try:
-        line_bot_api.push_message(id, TextSendMessage(text=msg))
+        line_bot_api.push_message(id, TextSendMessage(text=text))
     except:
         print('LINE error')
 
