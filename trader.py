@@ -139,7 +139,7 @@ def plan():
             onset()
     elif onboard:
         if 13 <= parse(time).hour < 14:
-            onboard, delay, todo = False, False, job
+            onboard, delay, todo = False, False, False
             info += '被老司機趕下車了\n\n'
             offset()
         elif on == 'B' and price <= price_to_lose or \
