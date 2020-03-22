@@ -106,7 +106,7 @@ def onset():
     try:
         int(RODorder)
         GA = GOC.GetAccount(broker, RODorder)
-        MA = GOC.MatchAccount(broker, RODorder)
+        #MA = GOC.MatchAccount(broker, RODorder)
         LINE(info + f'委託序號\n{GA[0][:-2]}')
     except:
         LINE(info + f'錯誤訊息：{RODorder}')
@@ -118,7 +118,7 @@ def offset():
         try:
             int(IOCorder)
             GA = GOC.GetAccount(broker, IOCorder)
-            MA = GOC.MatchAccount(broker, IOCorder)
+            #MA = GOC.MatchAccount(broker, IOCorder)
             LINE(info + f'委託序號\n{GA[0][:-2]}')
         except:
             LINE(info + f'錯誤訊息：{IOCorder}')
