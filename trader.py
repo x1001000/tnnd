@@ -102,15 +102,17 @@ def LINE(text, id=id):
         print('LINE error')
 
 def onset():
-    global RODorder
+    global RODorder, onboard
     RODorder = GOC.Order(broker, prod, on, str(price_within), str(qty), 'ROD', 'LMT', '1')
     try:
         int(RODorder)
+    except:
+        onboard = False
+        LINE(info + f'錯誤訊息：{RODorder}')
+    else:
         GA = GOC.GetAccount(broker, RODorder)
         #MA = GOC.MatchAccount(broker, RODorder)
         LINE(info + f'委託序號\n{GA[0][:-2]}')
-    except:
-        LINE(info + f'錯誤訊息：{RODorder}')
 def offset():
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
@@ -118,11 +120,12 @@ def offset():
         IOCorder = GOC.Order(broker, prod, off, str(price), stock[0].split(',')[1].strip('-'), 'IOC', 'MKT', '1')
         try:
             int(IOCorder)
+        except:
+            LINE(info + f'錯誤訊息：{IOCorder}')
+        else:
             GA = GOC.GetAccount(broker, IOCorder)
             #MA = GOC.MatchAccount(broker, IOCorder)
             LINE(info + f'委託序號\n{GA[0][:-2]}')
-        except:
-            LINE(info + f'錯誤訊息：{IOCorder}')
 
 def plan():
     global onboard, delay, todo, clk, on, off, price_within, price_to_win, price_to_lose, info
