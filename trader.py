@@ -25,6 +25,7 @@ print(f'{user}您好，我是爽爽！\n')
 month =   input('請問近月代碼: ')
 qty =     input('請問進場幾口: ') #sys.argv[3]
 job = int(input('請問進場幾趟: '))
+start, stop = map(parse, input('請問起訖時間: ').split())
 print()
 gold = [1001000]*10             #1001000.io
 gold[1]   = int(input('請問觸發通知上車的 近60秒成交量 大於: '))
@@ -54,14 +55,14 @@ def match2():
         except:
             continue
 def commission1():
-    global Buying1, Selling1
+    global buying1, Buying1, selling1, Selling1
     for tick in GOrder.GOQuote().Describe('Simulator', 'commission', prod1):
         try:
             buying1, Buying1, selling1, Selling1 = map(int, tick[2:])
         except:
             continue
 def commission2():
-    global Buying2, Selling2
+    global buying2, Buying2, selling2, Selling2
     for tick in GOrder.GOQuote().Describe('Simulator', 'commission', prod2):
         try:
             buying2, Buying2, selling2, Selling2 = map(int, tick[2:])
@@ -125,7 +126,7 @@ def offset():
 
 def plan():
     global onboard, delay, todo, clk, on, off, price_within, price_to_win, price_to_lose, info
-    if 9 <= parse(time).hour < 12 and not onboard and not delay and todo and clk != clk5:
+    if start <= parse(time) < stop and not onboard and not delay and todo and clk != clk5:
         if stones[1] > gold[1] and (
             stones[2] > gold[2] and stones[3] > gold[3] and stones[4]+stonez[4] > gold[4] and stones[5]+stonez[5] > gold[5] and 0 < stonez[4] < 900 and 0 < stonez[5] < 700 and K[3] > K[2] and K[1] >= K[0] or
             stones[2] < gold[6] and stones[3] < gold[7] and stones[4]+stonez[4] < gold[8] and stones[5]+stonez[5] < gold[9] and 0 > stonez[4] >-900 and 0 > stonez[5] >-700 and K[3] < K[2] and K[1] <= K[0] ):
@@ -159,8 +160,6 @@ def plan():
             delay = False
             info += '下車停利 (*´∀`)~♥\n\n'
             offset()
-    elif not 8 <= parse(time).hour < 14:
-        onboard, delay, todo = False, False, job
 
 onboard, delay, todo, clk, clk1, clk5, K, close, stonez = False, False, job, dtime(), dtime(), dtime(), [0]*5, 0, [0]*6
 
