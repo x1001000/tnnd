@@ -1,5 +1,4 @@
 import os
-os.system('chcp 950')
 from threading import Thread
 from datetime import datetime, timedelta, time as dtime
 from dateutil.parser import parse
@@ -108,11 +107,11 @@ def onset():
         int(RODorder)
     except:
         onboard = False
-        LINE(info + f'錯誤訊息：{RODorder}')
+        LINE(info + f'錯誤代碼：{RODorder}')
     else:
         GA = GOC.GetAccount(broker, RODorder)
         #MA = GOC.MatchAccount(broker, RODorder)
-        LINE(info + f'委託序號\n{GA[0][:-2]}')
+        LINE(info + f'{GA[0][:-2]}')
 def offset():
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
@@ -121,11 +120,11 @@ def offset():
         try:
             int(IOCorder)
         except:
-            LINE(info + f'錯誤訊息：{IOCorder}')
+            LINE(info + f'錯誤代碼：{IOCorder}')
         else:
             GA = GOC.GetAccount(broker, IOCorder)
             #MA = GOC.MatchAccount(broker, IOCorder)
-            LINE(info + f'委託序號\n{GA[0][:-2]}')
+            LINE(info + f'{GA[0][:-2]}')
 
 def plan():
     global onboard, delay, todo, clk, on, off, price_within, price_to_win, price_to_lose, info
@@ -139,17 +138,17 @@ def plan():
             price_within  = price + (rod if on == 'B' else -rod)
             price_to_win  = price + (s_p if on == 'B' else -s_p)
             price_to_lose = price - (s_l if on == 'B' else -s_l)
-            info += f"上車做{'多' if on == 'B' else '空'}。。。\n\n"
+            info += f"上車做{'多' if on == 'B' else '空'}。。。\n"
             onset()
     elif onboard:
         if 13 <= parse(time).hour < 14:
             onboard, delay, todo = False, False, False
-            info += '被老司機趕下車了\n\n'
+            info += '被老司機趕下車了\n'
             offset()
         elif on == 'B' and price <= price_to_lose or \
              on == 'S' and price >= price_to_lose:
             onboard, delay, todo = False, False, todo-1
-            info += '下車停損 (╥﹏╥)\n\n'
+            info += '下車停損 (╥﹏╥)\n'
             offset()
         elif on == 'B' and price >= price_to_win or \
              on == 'S' and price <= price_to_win:
@@ -161,7 +160,7 @@ def plan():
         elif on == 'B' and price < price_to_win or \
              on == 'S' and price > price_to_win:
             delay = False
-            info += '下車停利 (*´∀`)~♥\n\n'
+            info += '下車停利 (*´∀`)~♥\n'
             offset()
 
 onboard, delay, todo, clk, clk1, clk5, K, close, stonez = False, False, job, dtime(), dtime(), dtime(), [0]*5, 0, [0]*6
@@ -204,5 +203,5 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         stones[4:] = 0, 0
 
     print(time.split()[-1], *stones, price, sep='\t')
-    info = f'{time}\n{stones[1:]}\n{stonez[1:]}\n{K[:-1]}\n{price}\n{user}'
+    info = f'{time}\n{stones[1:]}\n{stonez[1:]}\n{K[:-1]} {price}\n{user}'
     plan()
