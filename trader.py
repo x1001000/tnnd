@@ -36,6 +36,7 @@ print()
 rod = int(input('請問觸發通知點的 幾點內 才上車: '))
 P,L = map(int, input('請問大範圍的下車 停利點 停損點: ').split())
 p,l = map(int, input('請問小範圍的下車 停利點 停損點: ').split())
+ons = input('請問只做多(B)只做空(S)還是都做(BS): ')
 print()
 year = str(datetime.now().year)[-1]
 prod1 = 'TXF' + month + year #sys.argv[1]
@@ -101,18 +102,19 @@ def LINE(text, id=id):
         print('LINE error')
 
 def onset():
-    global RODorder, onboard
+    global onboard, clk, RODorder
     RODorder = GOC.Order(broker, prod, on, str(price_within), str(qty), 'ROD', 'LMT', '1')
     try:
         int(RODorder)
     except:
-        onboard = False
         LINE(info + f'錯誤代碼：{RODorder}')
     else:
+        onboard, clk = True, clk5
         GA = GOC.GetAccount(broker, RODorder)
         #MA = GOC.MatchAccount(broker, RODorder)
         LINE(info + f'{GA[0][:-2]}')
 def offset():
+    global onboard, todo
     GOC.Delete(broker, RODorder)
     stock = GOC.GetInStock(broker)
     if stock:
@@ -122,44 +124,44 @@ def offset():
         except:
             LINE(info + f'錯誤代碼：{IOCorder}')
         else:
+            onboard, todo = False, todo-1
             GA = GOC.GetAccount(broker, IOCorder)
             #MA = GOC.MatchAccount(broker, IOCorder)
             LINE(info + f'{GA[0][:-2]}')
 
 def plan():
-    global onboard, delay, todo, clk, on, off, price_within, price_to_win, price_to_lose, info
+    global on, off, price_within, price_to_win, price_to_lose, info
     if start <= parse(time) < stop and not onboard and not delay and todo and clk != clk5:
         if stones[1] > gold[1] and (
             stones[2] > gold[2] and stones[3] > gold[3] and stones[4]+stonez[4] > gold[4] and stones[5]+stonez[5] > gold[5] and 0 < stonez[4] < 900 and 0 < stonez[5] < 700 and K[3] > K[2] and K[1] >= K[0] or
             stones[2] < gold[6] and stones[3] < gold[7] and stones[4]+stonez[4] < gold[8] and stones[5]+stonez[5] < gold[9] and 0 > stonez[4] >-900 and 0 > stonez[5] >-700 and K[3] < K[2] and K[1] <= K[0] ):
-            onboard, clk = True, clk5
-            s_p, s_l = (p, l) if abs(K[3] - K[2]) < abs(K[1] - K[0]) else (P, L)
             on, off = ('B', 'S') if stonez[5] > 0 else ('S', 'B')
-            price_within  = price + (rod if on == 'B' else -rod)
-            price_to_win  = price + (s_p if on == 'B' else -s_p)
-            price_to_lose = price - (s_l if on == 'B' else -s_l)
-            info += f"上車做{'多' if on == 'B' else '空'}。。。\n"
-            onset()
+            if on in ons:
+                s_p, s_l = (p, l) if abs(K[3] - K[2]) < abs(K[1] - K[0]) else (P, L)
+                price_within  = price + (rod if on == 'B' else -rod)
+                price_to_win  = price + (s_p if on == 'B' else -s_p)
+                price_to_lose = price - (s_l if on == 'B' else -s_l)
+                info += f"上車做{'多' if on == 'B' else '空'}。。。\n"
+                onset()
     elif onboard:
-        if 13 <= parse(time).hour < 14:
-            onboard, delay, todo = False, False, False
+        if False:#13 <= parse(time).hour < 14:
             info += '被老司機趕下車了\n'
             offset()
         elif on == 'B' and price <= price_to_lose or \
              on == 'S' and price >= price_to_lose:
-            onboard, delay, todo = False, False, todo-1
             info += '下車停損 (╥﹏╥)\n'
             offset()
         elif on == 'B' and price >= price_to_win or \
              on == 'S' and price <= price_to_win:
-            onboard, delay, todo = False, price_to_win, todo-1
-    elif delay:
+            info += '下車停利 (*´∀`)~♥\n'
+            offset()
+    elif False:#delay:
         if on == 'B' and price > price_to_win or \
            on == 'S' and price < price_to_win:
             price_to_win = delay + (1 if on == 'B' else -1)
         elif on == 'B' and price < price_to_win or \
              on == 'S' and price > price_to_win:
-            delay = False
+            #delay = False
             info += '下車停利 (*´∀`)~♥\n'
             offset()
 
@@ -203,5 +205,6 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
         stones[4:] = 0, 0
 
     print(time.split()[-1], *stones, price, sep='\t')
+    
     info = f'{time}\n{stones[1:]}\n{stonez[1:]}\n{K[:-1]} {price}\n{user}'
     plan()
