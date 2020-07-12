@@ -7,8 +7,8 @@ from linebot import LineBotApi
 from linebot.models import TextSendMessage
 
 #with open('line.txt') as f:
-#token = 'a1jS7SiQ1UKS86CAn+mBVbuWhblGCBy06qM8++yF6x17TjVEvR/jWQrp14qGFwk3LHFwxtdYWZVUR04CZ6mZ3OyJC3ISHorY33qgOIirwYkAwUh9KW4pLjUFJG+FCh0InF2dBUo4ses5oKpUb0ABWQdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
-token = '1efrfG/5kHZatudAt23L6zarS7bTfsJYcUmV2kmg5DvF2ArPX87bIxx2x1hXMT9E8Y+YAAZQ0pIJ9sltiGgt4zNSKwRiON11+7LTnBWw7im5+qVyrboj0paDuTvZBCFzHgN2JzMEQEjkZVvgfNaEPQdB04t89/1O/w1cDnyilFU=' # 爽爽弟
+token = 'a1jS7SiQ1UKS86CAn+mBVbuWhblGCBy06qM8++yF6x17TjVEvR/jWQrp14qGFwk3LHFwxtdYWZVUR04CZ6mZ3OyJC3ISHorY33qgOIirwYkAwUh9KW4pLjUFJG+FCh0InF2dBUo4ses5oKpUb0ABWQdB04t89/1O/w1cDnyilFU=' #f.readline().strip()
+#token = '1efrfG/5kHZatudAt23L6zarS7bTfsJYcUmV2kmg5DvF2ArPX87bIxx2x1hXMT9E8Y+YAAZQ0pIJ9sltiGgt4zNSKwRiON11+7LTnBWw7im5+qVyrboj0paDuTvZBCFzHgN2JzMEQEjkZVvgfNaEPQdB04t89/1O/w1cDnyilFU=' # 爽爽弟
 id    = 'C8b99dd9ad3608f5be14f5e3ff8bdb4af' #f.readline().strip()
 line_bot_api = LineBotApi(token)
 
@@ -36,7 +36,8 @@ print()
 rod = int(input('請問觸發通知點的 幾點內 才上車: '))
 P,L = map(int, input('請問大範圍的下車 停利點 停損點: ').split())
 p,l = map(int, input('請問小範圍的下車 停利點 停損點: ').split())
-ons = input('請問只做多(B)只做空(S)還是都做(BS): ')
+ons = input('請問只做多(B)只做空(S)還是多空都做(BS): ')
+_2K = input('請問看(Y)不看(N)前兩分K(若不看採小範圍): ')
 print()
 year = str(datetime.now().year)[-1]
 prod1 = 'TXF' + month + year #sys.argv[1]
@@ -112,7 +113,7 @@ def onset():
         onboard, clk = True, clk5
         GA = GOC.GetAccount(broker, RODorder)
         #MA = GOC.MatchAccount(broker, RODorder)
-        LINE(info + f'{GA[0][:-2]}')
+        LINE(info + f'{GA[0]}')
 def offset():
     global onboard, todo
     GOC.Delete(broker, RODorder)
@@ -127,11 +128,13 @@ def offset():
             onboard, todo = False, todo-1
             GA = GOC.GetAccount(broker, IOCorder)
             #MA = GOC.MatchAccount(broker, IOCorder)
-            LINE(info + f'{GA[0][:-2]}')
+            LINE(info + f'{GA[0]}')
 
 def plan():
     global on, off, price_within, price_to_win, price_to_lose, info
     if start <= parse(time) < stop and not onboard and not delay and todo and clk != clk5:
+        if _2K == 'N':
+            K = [0,2,2,3] if stonez[5] > 0 else [0,-2,-2,-3]
         if stones[1] > gold[1] and (
             stones[2] > gold[2] and stones[3] > gold[3] and stones[4]+stonez[4] > gold[4] and stones[5]+stonez[5] > gold[5] and 0 < stonez[4] < 900 and 0 < stonez[5] < 700 and K[3] > K[2] and K[1] >= K[0] or
             stones[2] < gold[6] and stones[3] < gold[7] and stones[4]+stonez[4] < gold[8] and stones[5]+stonez[5] < gold[9] and 0 > stonez[4] >-900 and 0 > stonez[5] >-700 and K[3] < K[2] and K[1] <= K[0] ):
