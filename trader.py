@@ -133,8 +133,6 @@ def offset():
 def plan():
     global on, off, price_within, price_to_win, price_to_lose, info
     if start <= parse(time) < stop and not onboard and not delay and todo and clk != clk5:
-        if _2K == 'N':
-            K = [0,2,2,3] if stonez[5] > 0 else [0,-2,-2,-3]
         if stones[1] > gold[1] and (
             stones[2] > gold[2] and stones[3] > gold[3] and stones[4]+stonez[4] > gold[4] and stones[5]+stonez[5] > gold[5] and 0 < stonez[4] < 900 and 0 < stonez[5] < 700 and K[3] > K[2] and K[1] >= K[0] or
             stones[2] < gold[6] and stones[3] < gold[7] and stones[4]+stonez[4] < gold[8] and stones[5]+stonez[5] < gold[9] and 0 > stonez[4] >-900 and 0 > stonez[5] >-700 and K[3] < K[2] and K[1] <= K[0] ):
@@ -195,7 +193,9 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
     stones.append(sold1 - bought1 + sold2 - bought2)
     stones.append(stones[2] - stonez[2])
     stones.append(stones[3] - stonez[3])
-    if zeroing(clk1, 1):
+    if _2K == 'N':
+            K = [0,2,2,3] if stonez[5] > 0 else [0,-2,-2,-3]
+    elif zeroing(clk1, 1):
         K.pop(0)
         K.pop(0)
         K.append(close)
