@@ -209,5 +209,5 @@ for tick in GOrder.GOQuote().Describe('Simulator', 'match', prod1):
 
     print(time.split()[-1], *stones, price, sep='\t')
     
-    info = f'{time}\n{stones[1:]}\n{stonez[1:]}\n{K[:-1]} {price}\n{user}'
+    info = f'{time}\n{stones[1:]}\n{stonez[1:]}\n{K[:-1] if K[0] else "不看前兩分K"}\n{price} {user}'
     plan()
