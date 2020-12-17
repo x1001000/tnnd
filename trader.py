@@ -51,7 +51,7 @@ elif month == 'A' and datetime.now().month == 1:
     prod2 = 'TXFB' + str(year)[-1]
 else:
     prod1 = 'TXF' + month + str(year)[-1] #sys.argv[1]
-    prod2 = 'TXF' + (chr(ord(month)+1) + str(year)[-1] #sys.argv[2]
+    prod2 = 'TXF' + chr(ord(month)+1) + str(year)[-1] #sys.argv[2]
 prod  = 'TX00' if user != '千仔' else prod1 #sys.argv[4]
 broker = 'Capital_Future' if prod == 'TX00' else 'Simulator'
 GOC = GOrder.GOCommand()
