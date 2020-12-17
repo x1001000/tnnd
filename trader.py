@@ -39,9 +39,19 @@ p,l = map(int, input('請問小範圍的下車 停利點 停損點: ').split())
 ons = input('請問只做多(B)只做空(S)還是多空都做(BS): ')
 _2K = input('請問看(Y)不看(N)前兩分K(若不看採小範圍): ')
 print()
-year = str(datetime.now().year)[-1]
-prod1 = 'TXF' + month + year #sys.argv[1]
-prod2 = 'TXF' + (chr(ord(month)+1) + year if month !='L' else 'A' +chr(ord(year)+1)) #sys.argv[2]
+year = datetime.now().year
+if month == 'L':
+    prod1 = 'TXFL' + str(year)[-1]
+    prod2 = 'TXFA' + str(year+1)[-1]
+elif month == 'A' and datetime.now().month == 12:
+    prod1 = 'TXFA' + str(year+1)[-1]
+    prod2 = 'TXFB' + str(year+1)[-1]
+elif month == 'A' and datetime.now().month == 1:
+    prod1 = 'TXFA' + str(year)[-1]
+    prod2 = 'TXFB' + str(year)[-1]
+else:
+    prod1 = 'TXF' + month + str(year)[-1] #sys.argv[1]
+    prod2 = 'TXF' + (chr(ord(month)+1) + str(year)[-1] #sys.argv[2]
 prod  = 'TX00' if user != '千仔' else prod1 #sys.argv[4]
 broker = 'Capital_Future' if prod == 'TX00' else 'Simulator'
 GOC = GOrder.GOCommand()
