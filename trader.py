@@ -56,7 +56,7 @@ prod  = 'TX00' if user != '千仔' else prod1 #sys.argv[4]
 broker = 'Capital_Future' if prod == 'TX00' else 'Simulator'
 GOC = GOrder.GOCommand()
 GOC.AddQuote(broker, prod)
-GOC.AddQuote('Simulator', prod1+','+prod2)
+GOC.AddQuote('Simulator', prod1)#+','+prod2)
 
 def match2():
     global Volume2, bought2, sold2
@@ -79,9 +79,11 @@ def commission2():
             buying2, Buying2, selling2, Selling2 = map(int, tick[2:])
         except:
             continue
-Thread(target=match2).start()
+
 Thread(target=commission1).start()
-Thread(target=commission2).start()
+# Thread(target=match2).start()
+# Thread(target=commission2).start()
+Volume2, bought2, sold2, buying2, Buying2, selling2, Selling2 = [0]*7
 
 queue = []
 def diff(queue, value, seconds=60):
